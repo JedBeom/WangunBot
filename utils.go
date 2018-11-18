@@ -3,18 +3,17 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"strings"
 )
 
-func sendMessage(w http.ResponseWriter, message ...string) {
+func sendMessage(w http.ResponseWriter, message string) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	template := `{
 	"message":{
-		"text" : "%v"
+		"text": "%v"
 	}
 }`
 
-	response := fmt.Sprintf(template, strings.Join(message, ""))
+	response := fmt.Sprintf(template, message)
 	w.Write([]byte(response))
 	return
 }

@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"net/http"
+	"strings"
 	"time"
 
 	sm "github.com/JedBeom/schoolmeal"
@@ -48,6 +49,8 @@ func messageHandler(w http.ResponseWriter, r *http.Request) {
 	case "금요일":
 		meal, err = getMealByWeekday(time.Friday)
 	}
+
+	meal = strings.Replace(meal, "\n", "\\n", -1)
 
 	if meal == " " {
 		meal = "그 날의 급식이 없어요!"
