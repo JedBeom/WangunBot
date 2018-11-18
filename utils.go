@@ -10,6 +10,10 @@ func sendMessage(w http.ResponseWriter, message string) {
 	template := `{
 	"message":{
 		"text": "%v"
+	},
+	"keyboard": {
+		"type": "buttons",
+		"buttons": ["월요일", "화요일", "수요일", "목요일", "금요일"]
 	}
 }`
 
