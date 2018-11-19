@@ -1,23 +1,37 @@
 package main
 
 import (
-	"fmt"
+	"encoding/json"
+	"log"
 	"net/http"
 )
 
-func sendMessage(w http.ResponseWriter, message string) {
+func sendMessage(w http.ResponseWriter, content string) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	template := `{
-	"message":{
-		"text": "%v"
-	},
-	"keyboard": {
-		"type": "buttons",
-		"buttons": ["월요일", "화요일", "수요일", "목요일", "금요일"]
-	}
-}`
 
-	response := fmt.Sprintf(template, message)
-	w.Write([]byte(response))
+	keyboard := Keyboard{
+		Type:    "buttons",
+		Buttons: buttons,
+	}
+
+	message := Message{
+		Text: content,
+	}
+
+	response := Response{
+		Keyboard: keyboard,
+		Message:  message,
+	}
+
+	b, err := json.MarshalIndent(response, "", "\t")
+	if err != nil {
+		log.Println(err)
+	}
+
+	w.Write(b)
 	return
+}
+
+func logger(p Post) {
+	log.Println(p.UserKey, p.Content)
 }
