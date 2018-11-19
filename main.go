@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strings"
 
 	sm "github.com/JedBeom/schoolmeal"
 	"github.com/jasonlvhit/gocron"
@@ -63,7 +62,7 @@ func messageHandler(w http.ResponseWriter, r *http.Request) {
 			Buttons: []string{},
 		}
 
-		message := Message{Text: "왕운봇이 더 개선되기 위한 방안을 적어주세요!\\n욕설 사용 시 법적조치 됩니다."}
+		message := Message{Text: "왕운봇이 더 개선되기 위한 방안을 적어주세요!\n욕설 사용 시 법적조치 됩니다."}
 		response := Response{Keyboard: keyboard, Message: message}
 
 		b, err := json.MarshalIndent(response, "", "\t")
@@ -81,8 +80,6 @@ func messageHandler(w http.ResponseWriter, r *http.Request) {
 		sendMessage(w, "피드백 감사합니다. 검토 후 반영을 결정 하겠습니다.")
 		return
 	}
-
-	meal = strings.Replace(meal, "\n", "\\n", -1)
 
 	if meal == " " || meal == "" {
 		meal = "그 날의 급식이 없어요!"
