@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -17,10 +18,14 @@ var (
 		Zone:           sm.Jeonnam,
 	}
 
-	meals    []string
+	// 급식 저장용
+	meals []string
+
+	// feedback.log
 	feedback *log.Logger
 )
 
+// 급식을 불러옴
 func getMeals() {
 
 	todayMeals, err := school.GetWeekMeal(sm.Timestamp(), sm.Lunch)
@@ -33,6 +38,7 @@ func getMeals() {
 
 }
 
+// /keyboard
 func keyboardHandler(w http.ResponseWriter, r *http.Request) {
 	keyboard := Keyboard{
 		Type:    "buttons",
@@ -70,11 +76,26 @@ func main() {
 	feedback = log.New(feedbackLog, "", 0)
 
 	gocron.Every(1).Day().At("00:00").Do(getMeals)
-	gocron.Every(2).Minutes().Do(getAirq)
+
+	// 매 시간 16분마다 미세먼지를 불러오게
+Sapjil:
+	for x := 0; x < 3; x++ {
+
+		for y := 0; y < 10; y++ {
+			if x == 2 && y > 3 {
+				break Sapjil
+			}
+			time := fmt.Sprintf("%d%d:16", x, y)
+			gocron.Every(1).Day().At(time).Do(getAirq)
+
+		}
+
+	}
 
 	http.HandleFunc("/message", messageHandler)
 	http.HandleFunc("/keyboard", keyboardHandler)
 
+	// init
 	getMeals()
 	getAirq()
 

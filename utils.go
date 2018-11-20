@@ -6,6 +6,7 @@ import (
 	"net/http"
 )
 
+// 받은것만 보냅니다
 func sendMessage(w http.ResponseWriter, content string) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 

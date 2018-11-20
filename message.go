@@ -9,6 +9,7 @@ import (
 func messageHandler(w http.ResponseWriter, r *http.Request) {
 	var post Post
 
+	// 해독
 	decoder := json.NewDecoder(r.Body)
 	err := decoder.Decode(&post)
 	if err != nil {
@@ -17,7 +18,9 @@ func messageHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	logger(post)
 
+	// 급식일 경우에...
 	var meal string
+
 	switch post.Content {
 
 	case "급식":
@@ -66,12 +69,16 @@ func messageHandler(w http.ResponseWriter, r *http.Request) {
 		return
 
 	default:
+		// 피드백 받았을 때의 경우겠죠 그런 경우 밖에 없음 아무튼 그럼
+
+		// feedback.log에 저장
 		feedback.Println(post.UserKey, post.Content)
 
 		sendMessage(w, "피드백 감사합니다. 검토 후 반영을 결정 하겠습니다.")
 		return
 	}
 
+	// 슬라이스에 저장된게 없을 때!
 	if meal == " " || meal == "" {
 		meal = "그 날의 급식이 없어요!"
 	}

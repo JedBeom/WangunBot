@@ -21,6 +21,7 @@ type Response struct {
 }
 
 var (
+	// '급식'을 받았을 때 keyboard
 	weekdays = []string{
 		"월요일",
 		"화요일",
@@ -29,6 +30,7 @@ var (
 		"금요일",
 	}
 
+	// 평상시 keyboard
 	buttons = []string{
 		"급식",
 		"미세먼지",

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -18,6 +17,7 @@ var (
 	hangulQ HangulQ
 )
 
+// 미세먼지 불러오기
 func getAirq() {
 	err := airq.LoadServiceKey("airq_key.txt")
 	if err != nil {
@@ -74,20 +74,12 @@ func getAirq() {
 
 }
 
+// 미세먼지 보내기
 func sendAirq(w http.ResponseWriter) {
 	template := "현재 순천왕운중학교 주위 공기 상태는\n미세먼지는 %s, 초미세먼지는 %s!"
 	content := fmt.Sprintf(template, hangulQ.Pm10, hangulQ.Pm25)
 
-	message := Message{Text: content}
-	keyboard := Keyboard{Type: "buttons", Buttons: buttons}
-	response := Response{Message: message, Keyboard: keyboard}
-
-	b, err := json.MarshalIndent(response, "", "\t")
-	if err != nil {
-		log.Println(err)
-	}
-
-	w.Write(b)
+	sendMessage(w, content)
 
 	return
 
