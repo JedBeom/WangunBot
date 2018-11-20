@@ -23,6 +23,10 @@ func messageHandler(w http.ResponseWriter, r *http.Request) {
 
 	switch post.Content {
 
+	case "홈":
+		sendMessage(w, "저에게 무슨 요청을 하실 건가요?")
+		return
+
 	case "급식":
 		keyboard := Keyboard{Type: "buttons", Buttons: weekdays}
 		message := Message{Text: "요일을 선택 해주세요."}
@@ -56,7 +60,7 @@ func messageHandler(w http.ResponseWriter, r *http.Request) {
 			Buttons: []string{},
 		}
 
-		message := Message{Text: "왕운봇이 더 개선되기 위한 방안을 적어주세요!\n욕설 사용 시 법적조치 됩니다."}
+		message := Message{Text: "왕운봇이 더 개선되기 위한 방안을 적어주세요!\n욕설 사용 시 법적조치 됩니다.\n뒤로 돌아가려면 '홈'을 입력해 주세요."}
 		response := Response{Keyboard: keyboard, Message: message}
 
 		b, err := json.MarshalIndent(response, "", "\t")
