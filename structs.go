@@ -21,12 +21,17 @@ type Response struct {
 }
 
 var (
-	buttons = []string{
+	weekdays = []string{
 		"월요일",
 		"화요일",
 		"수요일",
 		"목요일",
 		"금요일",
+	}
+
+	buttons = []string{
+		"급식",
+		"미세먼지",
 		"피드백",
 	}
 )

@@ -1,5 +1,8 @@
 lunchbot
+wangunbot
 *.exe
 
 access.log
 feedback.log
+
+airq_key.txt
