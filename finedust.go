@@ -50,7 +50,7 @@ func getAirq() {
 	}
 	hangulQ.Pm10 = rate
 
-	switch quality.Pm25Value {
+	switch quality.Pm25GradeWHO {
 	case 1:
 		rate = "최고"
 	case 2:
