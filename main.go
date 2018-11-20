@@ -70,7 +70,7 @@ func main() {
 	feedback = log.New(feedbackLog, "", 0)
 
 	gocron.Every(1).Day().At("00:00").Do(getMeals)
-	gocron.Every(1).Hour().Do(getAirq)
+	gocron.Every(2).Minutes().Do(getAirq)
 
 	http.HandleFunc("/message", messageHandler)
 	http.HandleFunc("/keyboard", keyboardHandler)
