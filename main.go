@@ -68,6 +68,7 @@ func main() {
 
 	log.Println("Starting")
 	log.SetOutput(inputLog)
+	log.Println("Server Started")
 
 	feedbackLog, err := os.OpenFile("feedback.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666) // 있으면 사용, 없으면 생성
 	if err != nil {
