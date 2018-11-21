@@ -27,6 +27,9 @@ func getAirq() {
 	quality, err := airq.GetAirqOfNowByStation("연향동")
 	if err != nil {
 		log.Println(err)
+		hangulQ.Pm10 = "Error"
+
+		return
 	}
 
 	var rate string
@@ -76,6 +79,11 @@ func getAirq() {
 
 // 미세먼지 보내기
 func sendAirq(w http.ResponseWriter) {
+	if hangulQ.Pm10 == "Error" {
+		sendMessage(w, "학교 주변 미세먼지 측정소가 응답하지 않습니다.")
+		return
+	}
+
 	template := "현재 순천왕운중학교 주위 공기 상태는\n미세먼지는 %s, 초미세먼지는 %s!"
 	content := fmt.Sprintf(template, hangulQ.Pm10, hangulQ.Pm25)
 

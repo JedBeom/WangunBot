@@ -87,5 +87,13 @@ func messageHandler(w http.ResponseWriter, r *http.Request) {
 		meal = "그 날의 급식이 없어요!"
 	}
 
-	sendMessage(w, meal)
+	keyboard := Keyboard{Type: "buttons", Buttons: weekdays}
+	message := Message{Text: meal}
+	response := Response{Keyboard: keyboard, Message: message}
+	b, err := json.MarshalIndent(response, "", "\t")
+	if err != nil {
+		log.Println(err)
+	}
+
+	w.Write(b)
 }
