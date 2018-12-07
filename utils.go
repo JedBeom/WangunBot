@@ -7,12 +7,16 @@ import (
 )
 
 // 받은것만 보냅니다
-func sendMessage(w http.ResponseWriter, content string) {
+func sendMessage(w http.ResponseWriter, content string, buttons []string) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
 	keyboard := Keyboard{
 		Type:    "buttons",
 		Buttons: buttons,
+	}
+
+	if len(buttons) == 0 {
+		keyboard.Type = "Text"
 	}
 
 	message := Message{

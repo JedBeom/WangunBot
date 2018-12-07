@@ -7,42 +7,14 @@ import (
 	"net/http"
 	"os"
 
-	sm "github.com/JedBeom/schoolmeal"
 	"github.com/jasonlvhit/gocron"
 )
-
-var (
-	school = sm.School{
-		SchoolCode:     "Q100005451",
-		SchoolKindCode: sm.Middle,
-		Zone:           sm.Jeonnam,
-	}
-
-	// 급식 저장용
-	meals []string
-
-	// feedback.log
-	feedback *log.Logger
-)
-
-// 급식을 불러옴
-func getMeals() {
-
-	todayMeals, err := school.GetWeekMeal(sm.Timestamp(), sm.Lunch)
-	if err != nil {
-		log.Println(err)
-		return
-	}
-
-	meals = todayMeals
-
-}
 
 // /keyboard
 func keyboardHandler(w http.ResponseWriter, r *http.Request) {
 	keyboard := Keyboard{
 		Type:    "buttons",
-		Buttons: buttons,
+		Buttons: home,
 	}
 
 	b, err := json.MarshalIndent(keyboard, "", "\t")
@@ -87,7 +59,7 @@ Sapjil:
 				break Sapjil
 			}
 			time := fmt.Sprintf("%d%d:16", x, y)
-			gocron.Every(1).Day().At(time).Do(getAirq)
+			gocron.Every(1).Day().At(time).Do(getAirq, "연향동")
 
 		}
 
@@ -98,7 +70,7 @@ Sapjil:
 
 	// init
 	getMeals()
-	getAirq()
+	getAirq("연향동")
 
 	go server.ListenAndServe()
 	<-gocron.Start()

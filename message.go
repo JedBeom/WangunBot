@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 )
 
@@ -18,57 +17,28 @@ func messageHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	logger(post)
 
-	// 급식일 경우에...
-	var meal string
-
 	switch post.Content {
 
 	case "홈":
-		sendMessage(w, "저에게 무슨 요청을 하실 건가요?")
+		sendMessage(w, "저에게 무슨 요청을 하실 건가요?", home)
 		return
 
 	case "급식":
-		keyboard := Keyboard{Type: "buttons", Buttons: weekdays}
-		message := Message{Text: "요일을 선택 해주세요."}
-		response := Response{Keyboard: keyboard, Message: message}
-		b, err := json.MarshalIndent(response, "", "\t")
-		if err != nil {
-			log.Println(err)
-		}
+		sendMessage(w, "요일을 선택해주세요.", weekdays)
+		return
 
-		w.Write(b)
+	case "월요일", "화요일", "수요일", "목요일", "금요일":
+		sendMeal(w, post)
 		return
 
 	case "미세먼지":
 		sendAirq(w)
 		return
 
-	case "월요일":
-		meal = meals[1]
-	case "화요일":
-		meal = meals[2]
-	case "수요일":
-		meal = meals[3]
-	case "목요일":
-		meal = meals[4]
-	case "금요일":
-		meal = meals[5]
-
 	case "피드백":
-		keyboard := Keyboard{
-			Type:    "text",
-			Buttons: []string{},
-		}
+		message := "왕운봇이 더 개선되기 위한 방안을 적어주세요!\n욕설 사용 시 법적조치 됩니다.\n뒤로 돌아가려면 '홈'을 입력해 주세요."
 
-		message := Message{Text: "왕운봇이 더 개선되기 위한 방안을 적어주세요!\n욕설 사용 시 법적조치 됩니다.\n뒤로 돌아가려면 '홈'을 입력해 주세요."}
-		response := Response{Keyboard: keyboard, Message: message}
-
-		b, err := json.MarshalIndent(response, "", "\t")
-		if err != nil {
-			log.Println(err)
-		}
-
-		w.Write(b)
+		sendMessage(w, message, []string{})
 
 		return
 
@@ -78,22 +48,8 @@ func messageHandler(w http.ResponseWriter, r *http.Request) {
 		// feedback.log에 저장
 		feedback.Println(post.UserKey, post.Content)
 
-		sendMessage(w, "피드백 감사합니다. 검토 후 반영을 결정 하겠습니다.")
+		sendMessage(w, "피드백 감사합니다. 검토 후 반영을 결정 하겠습니다.", home)
 		return
 	}
 
-	// 슬라이스에 저장된게 없을 때!
-	if meal == " " || meal == "" {
-		meal = "그 날의 급식이 없어요!"
-	}
-
-	keyboard := Keyboard{Type: "buttons", Buttons: weekdays}
-	message := Message{Text: meal}
-	response := Response{Keyboard: keyboard, Message: message}
-	b, err := json.MarshalIndent(response, "", "\t")
-	if err != nil {
-		log.Println(err)
-	}
-
-	w.Write(b)
 }
