@@ -35,6 +35,10 @@ func messageHandler(w http.ResponseWriter, r *http.Request) {
 		sendAirq(w)
 		return
 
+	case "일정":
+		dDay(w)
+		return
+
 	case "피드백":
 		message := "왕운봇이 더 개선되기 위한 방안을 적어주세요!\n욕설 사용 시 법적조치 됩니다.\n뒤로 돌아가려면 '홈'을 입력해 주세요."
 
