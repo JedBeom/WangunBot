@@ -36,7 +36,7 @@ func newEvent(name string, year, month, day int) {
 		Name: name,
 		Date: time.Date(year, time.Month(month), day, 0, 0, 0, 0, Loc),
 	}
-	event.DateTimestamp = fmt.Sprintf("%d-%d", year, month, day)
+	event.DateTimestamp = fmt.Sprintf("%d-%d", month, day)
 	Events = append(Events, event)
 }
 
