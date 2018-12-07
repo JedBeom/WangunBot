@@ -16,7 +16,7 @@ func sendMessage(w http.ResponseWriter, content string, buttons []string) {
 	}
 
 	if len(buttons) == 0 {
-		keyboard.Type = "Text"
+		keyboard.Type = "text"
 	}
 
 	message := Message{
