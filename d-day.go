@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"net/http"
 	"text/template"
 	"time"
@@ -35,7 +36,7 @@ func newEvent(name string, year, month, day int) {
 		Name: name,
 		Date: time.Date(year, time.Month(month), day, 0, 0, 0, 0, Loc),
 	}
-	event.DateTimestamp = event.Date.Format("2004-09-08")
+	event.DateTimestamp = fmt.Sprintf("%d-%d-%d", year, month, day)
 	Events = append(Events, event)
 }
 
