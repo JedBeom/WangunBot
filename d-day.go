@@ -45,12 +45,9 @@ func dDay(w http.ResponseWriter) {
 		Events[i].DDay = int(Events[i].Date.Sub(time.Now().Local()).Hours() / 24)
 	}
 
-	format := `주요 일정
-++++++++++
-{{ range . }}
+	format := `{{ range . }}
 {{ .Name }} {{ .DateTimestamp }}
 D-{{ .DDay }}
----
 {{ end }}`
 
 	t := template.Must(template.New("format").Parse(format))
