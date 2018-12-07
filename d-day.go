@@ -41,8 +41,11 @@ func newEvent(name string, year, month, day int) {
 }
 
 func dDay(w http.ResponseWriter) {
+	now := time.Now()
+	today := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, Loc)
+
 	for i := range Events {
-		Events[i].DDay = int(Events[i].Date.Sub(time.Now().Local()).Hours() / 24)
+		Events[i].DDay = int(Events[i].Date.Sub(today).Hours() / 24)
 	}
 
 	format := `{{ range . }}
