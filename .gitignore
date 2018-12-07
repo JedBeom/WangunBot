@@ -6,3 +6,5 @@ access.log
 feedback.log
 
 airq_key.txt
+
+.idea/

@@ -32,7 +32,7 @@ var (
 	}
 
 	// 평상시 keyboard
-	buttons = []string{
+	home = []string{
 		"급식",
 		"미세먼지",
 		"피드백",
