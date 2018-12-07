@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"time"
 
 	sm "github.com/jedbeom/schoolmeal"
 )
@@ -24,7 +25,12 @@ var (
 // 급식을 불러옴
 func getMeals() {
 
-	todayMeals, err := school.GetWeekMeal(sm.Timestamp(), sm.Lunch)
+	now := time.Now()
+
+	if now.Weekday() == time.Saturday {
+		now.Add(time.Hour * 24)
+	}
+	todayMeals, err := school.GetWeekMeal(sm.Timestamp(now), sm.Lunch)
 	if err != nil {
 		log.Println(err)
 		return
