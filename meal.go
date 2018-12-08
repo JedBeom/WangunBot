@@ -32,6 +32,7 @@ func getMeals() {
 		now = now.AddDate(0, 0, 1)
 		fmt.Println(now)
 	}
+
 	todayMeals, err := school.GetWeekMeal(sm.Timestamp(now), sm.Lunch)
 	if err != nil {
 		log.Println(err)
@@ -58,7 +59,7 @@ func sendMeal(w http.ResponseWriter, post Post) {
 		day = 5
 	}
 
-	message := meals[day].Date + "\n" + meals[day].Content
+	message := meals[day].Date + "의 급식\n\n" + meals[day].Content
 	sendMessage(w, message, weekdays)
 
 }
