@@ -25,7 +25,7 @@ var (
 // 급식을 불러옴
 func getMeals() {
 
-	now := time.Now()
+	now := time.Now().Local()
 
 	if now.Weekday() == time.Saturday {
 		now.Add(time.Hour * 24)
