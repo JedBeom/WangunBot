@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -30,7 +29,6 @@ func getMeals() {
 
 	if now.Weekday() == time.Saturday {
 		now = now.AddDate(0, 0, 1)
-		fmt.Println(now)
 	}
 
 	todayMeals, err := school.GetWeekMeal(sm.Timestamp(now), sm.Lunch)
