@@ -29,7 +29,7 @@ func getMeals() {
 	now := time.Now().Local()
 
 	if now.Weekday() == time.Saturday {
-		now.Add(time.Hour * 24)
+		now = now.AddDate(0, 0, 1)
 		fmt.Println(now)
 	}
 	todayMeals, err := school.GetWeekMeal(sm.Timestamp(now), sm.Lunch)
