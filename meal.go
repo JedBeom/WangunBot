@@ -25,11 +25,12 @@ var (
 // 급식을 불러옴
 func getMeals() {
 
-	now := time.Now()
+	now := time.Now().Local()
 
 	if now.Weekday() == time.Saturday {
-		now.Add(time.Hour * 24)
+		now = now.AddDate(0, 0, 1)
 	}
+
 	todayMeals, err := school.GetWeekMeal(sm.Timestamp(now), sm.Lunch)
 	if err != nil {
 		log.Println(err)
@@ -56,7 +57,7 @@ func sendMeal(w http.ResponseWriter, post Post) {
 		day = 5
 	}
 
-	message := meals[day].Date + "\n" + meals[day].Content
+	message := meals[day].Date + "의 급식\n\n" + meals[day].Content
 	sendMessage(w, message, weekdays)
 
 }
