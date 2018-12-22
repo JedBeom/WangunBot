@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	sm "github.com/jedbeom/schoolmeal"
+	sm "github.com/Jedbeom/schoolmeal"
 )
 
 var (

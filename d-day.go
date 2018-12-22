@@ -25,7 +25,7 @@ var (
 func init() {
 	Loc, _ = time.LoadLocation("Asia/Seoul")
 
-	newEvent("학생회장선거", 2018, 12, 18)
+	//newEvent("학생회장선거", 2018, 12, 18)
 	newEvent("왕운축제", 2018, 12, 26)
 	newEvent("방학식", 2018, 12, 31)
 

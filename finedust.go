@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/jedbeom/airq"
+	"github.com/Jedbeom/airq"
 )
 
 type HangulQ struct {
