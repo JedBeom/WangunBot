@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	sm "github.com/Jedbeom/schoolmeal"
+	sm "github.com/JedBeom/schoolmeal"
 )
 
 var (
@@ -55,6 +55,10 @@ func sendMeal(w http.ResponseWriter, post Post) {
 		day = 4
 	case "금요일":
 		day = 5
+	}
+
+	if meals[day].Content == "" {
+		meals[day].Content = "없어요!\n왕운봇 소멸의 날이 다가오고 있어요..."
 	}
 
 	message := meals[day].Date + "의 급식\n\n" + meals[day].Content
